@@ -16,4 +16,17 @@ public class Item
         Price = price;
         Category = category;
     }
+    public override bool Equals(object obj)
+{
+    if (obj is not Item other)
+        return false;
+
+    return Name == other.Name &&
+           Category == other.Category;
+}
+
+public override int GetHashCode()
+{
+    return HashCode.Combine(Name, Category);
+}
 }
