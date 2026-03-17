@@ -10,7 +10,7 @@ public class Item
 {
     public string Name { get; }
     public decimal Price { get; }
-    public ItemCategory Category { get; }
+    public Item_category Category { get; }
 
     public Item(string name, decimal price, ItemCategory category)
     {
