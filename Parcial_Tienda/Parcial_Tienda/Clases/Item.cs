@@ -1,32 +1,42 @@
-public class Item
-{
-    public string Name { get; }
-    public decimal Price { get; }
-    public ItemCategoria Category { get; }
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-    public Item(string name, decimal price, ItemCategoria category)
+
+namespace Parcial_Tienda.Clases
+{
+    public class Item
     {
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Nombre inválido");
+        public string Name { get; }
+        public decimal Price { get; }
+        public ItemCategoria Category { get; }
 
-        if (price <= 0)
-            throw new ArgumentException("El precio debe ser positivo");
+        public Item(string name, decimal price, ItemCategoria category)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Nombre inválido");
 
-        Name = name;
-        Price = price;
-        Category = category;
+            if (price <= 0)
+                throw new ArgumentException("El precio debe ser positivo");
+
+            Name = name;
+            Price = price;
+            Category = category;
+        }
+        public override bool Equals(object obj)
+        {
+            if (obj is not Item other)
+                return false;
+
+            return Name == other.Name &&
+                   Category == other.Category;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name, Category);
+        }
     }
-    public override bool Equals(object obj)
-{
-    if (obj is not Item other)
-        return false;
-
-    return Name == other.Name &&
-           Category == other.Category;
-}
-
-public override int GetHashCode()
-{
-    return HashCode.Combine(Name, Category);
-}
 }

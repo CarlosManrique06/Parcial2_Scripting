@@ -6,27 +6,31 @@ using System.Threading.Tasks;
 
 namespace Parcial_Tienda.Clases
 {
-   
-    public Item Item { get; private set; }
-    public int Quantity { get; private set; }
-
-    public InventorySlot(Item item, int quantity)
+    public class InventorySlot
     {
-        if (item == null)
-            throw new ArgumentNullException(nameof(item));
+        public Item Item { get; private set; }
+        public int Quantity { get; private set; }
 
-        if (quantity < 0)
-            throw new ArgumentException("Cantidad inválida");
+        public InventorySlot(Item item, int quantity)
+        {
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
 
-        Item = item;
-        Quantity = quantity;
+            if (quantity < 0)
+                throw new ArgumentException("Cantidad inválida");
+
+            Item = item;
+            Quantity = quantity;
+        }
+
+        public void Add(int amount)
+        {
+            if (amount <= 0)
+                throw new ArgumentException("Cantidad inválida");
+
+            Quantity += amount;
+        }
     }
-
-    public void Add(int amount)
-    {
-        if (amount <= 0)
-            throw new ArgumentException("Cantidad inválida");
-
-        Quantity += amount;
-    }
+    
+    
 }
