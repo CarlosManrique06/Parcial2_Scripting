@@ -26,9 +26,9 @@
         Player player = new Player(gold);
         Store store = new Store();
 
-        var sword = new Item("Espada Excalibour", 500, ItemCategoria.Weapon);
-        var armor = new Item("Armadura de oro", 70, ItemCategoria.Armor);
-        var potion = new Item("Poción curacion 1", 20, ItemCategoria.Supply);
+        var sword = new Item("Espada", 50, ItemCategoria.Weapon);
+        var armor = new Item("Armadura", 70, ItemCategoria.Armor);
+        var potion = new Item("Poción", 20, ItemCategoria.Supply);
 
         store.AddItem(sword, 2);
         store.AddItem(armor, 1);
