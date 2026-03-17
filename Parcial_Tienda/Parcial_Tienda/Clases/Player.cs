@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Parcial_Tienda.Clases
 {
-    internal class Player
+    public class Player
     {
         public decimal Gold { get; private set; }
         public PlayerInventory Inventory { get; private set; }
