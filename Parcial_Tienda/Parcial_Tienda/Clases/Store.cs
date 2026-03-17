@@ -6,22 +6,21 @@ using System.Threading.Tasks;
 
 namespace Parcial_Tienda.Clases
 {
-    internal class Store
-    {
 
-        public class Store
+
+public class Store
 {
     private Dictionary<Item, int> inventory = new Dictionary<Item, int>();
 
     public Store(Dictionary<Item, int> initialInventory)
     {
         if (initialInventory == null || initialInventory.Count == 0)
-            throw new ArgumentException("La tienda debe iniciar con al menos un item.");
+            throw new ArgumentException("La tienda debe iniciar con al menos un item");
 
         foreach (var pair in initialInventory)
         {
             if (pair.Value < 0)
-                throw new ArgumentException("Cantidad inválida.");
+                throw new ArgumentException("Cantidad inválida");
 
             inventory[pair.Key] = pair.Value;
         }
@@ -52,19 +51,11 @@ namespace Parcial_Tienda.Clases
         return inventory.ContainsKey(item) ? inventory[item] : 0;
     }
 
-    // 🧠 COMPRA SIMPLE
-    public bool BuyItem(Player player, Item item, int quantity)
-    {
-        var cart = new Dictionary<Item, int> { { item, quantity } };
-        return BuyItems(player, cart);
-    }
-
-    // 🔥 COMPRA MÚLTIPLE (CLAVE DEL TALLER)
     public bool BuyItems(Player player, Dictionary<Item, int> items)
     {
         decimal total = 0;
 
-        // 1. VALIDAR TODO PRIMERO
+        // VALIDAR TODO PRIMERO (TRANSACCIONAL)
         foreach (var pair in items)
         {
             var item = pair.Key;
@@ -79,10 +70,10 @@ namespace Parcial_Tienda.Clases
             total += item.Price * qty;
         }
 
-        if (player.Gold < total)
+        if (!player.CanAfford(total))
             return false;
 
-        // 2. SI TODO OK → APLICAR CAMBIOS
+        // APLICAR CAMBIOS
         player.SpendGold(total);
 
         foreach (var pair in items)
@@ -101,7 +92,10 @@ namespace Parcial_Tienda.Clases
 
         return true;
     }
-}
-        
+
+    public Dictionary<Item, int> GetAllItems()
+    {
+        return new Dictionary<Item, int>(inventory);
     }
+}
 }
