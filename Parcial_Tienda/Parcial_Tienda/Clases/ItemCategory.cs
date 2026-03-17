@@ -6,19 +6,11 @@ using System.Threading.Tasks;
 
 namespace Parcial_Tienda.Clases
 {
-    internal class ItemCategory
-    {
-
-public enum ItemCategory
+    public enum ItemCategoria
 {
     Weapon,
     Armor,
     Accessory,
     Supply
 }
-
-
-
-        
-    }
 }
