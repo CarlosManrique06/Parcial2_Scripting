@@ -1,83 +1,118 @@
 ﻿namespace Parcial_Tienda
 {
-    internal class Program
-    {
-      static void Main()
-    {
-        Random rnd = new Random();
-        decimal gold;
 
-        Console.WriteLine("1. Ingresar oro manualmente");
+
+class Program
+{
+    static void Main()
+    {
+        Player player;
+
+        Console.WriteLine("1. Ingresar oro manual");
         Console.WriteLine("2. Oro aleatorio");
 
-        int option = int.Parse(Console.ReadLine());
+        int opcion = int.Parse(Console.ReadLine());
 
-        if (option == 1)
+        if (opcion == 1)
         {
-            Console.Write("Ingrese su oro: ");
-            gold = decimal.Parse(Console.ReadLine());
+            Console.Write("Ingrese oro: ");
+            player = new Player(decimal.Parse(Console.ReadLine()));
         }
         else
         {
-            gold = rnd.Next(50, 201);
-            Console.WriteLine($"Oro asignado: {gold}");
+            var rand = new Random();
+            player = new Player(rand.Next(50, 200));
         }
 
-        Player player = new Player(gold);
-        Store store = new Store();
-
         var sword = new Item("Espada", 50, ItemCategoria.Weapon);
-        var armor = new Item("Armadura", 70, ItemCategoria.Armor);
         var potion = new Item("Poción", 20, ItemCategoria.Supply);
 
-        store.AddItem(sword, 2);
-        store.AddItem(armor, 1);
-        store.AddItem(potion, 5);
+        var store = new Store(new Dictionary<Item, int>
+        {
+            { sword, 3 },
+            { potion, 5 }
+        });
 
         while (true)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"\nORO ACTUAL: {player.Gold}");
+            Console.WriteLine($"\nORO: {player.Gold}");
             Console.ResetColor();
 
             Console.WriteLine("\n1. Ir a la tienda");
             Console.WriteLine("2. Ver inventario");
-            Console.WriteLine("3. Salir");
+            Console.WriteLine("3. Crear item en tienda");
+            Console.WriteLine("0. Salir");
 
             int choice = int.Parse(Console.ReadLine());
 
-            if (choice == 1)
-            {
-                var items = store.GetItems();
+            if (choice == 0) break;
 
-                if (items.Count == 0)
+            if (choice == 2)
+            {
+                player.Inventory.ShowInventory();
+            }
+            else if (choice == 3)
+            {
+                Console.Write("Nombre: ");
+                string name = Console.ReadLine();
+
+                Console.Write("Precio: ");
+                decimal price = decimal.Parse(Console.ReadLine());
+
+                Console.WriteLine("Categoría: 0=Weapon,1=Armor,2=Accessory,3=Supply");
+                ItemCategoria cat = (ItemCategoria)int.Parse(Console.ReadLine());
+
+                Console.Write("Cantidad: ");
+                int qty = int.Parse(Console.ReadLine());
+
+                store.AddItem(new Item(name, price, cat), qty);
+            }
+            else if (choice == 1)
+            {
+                var items = store.GetAllItems();
+
+                if (store.IsEmpty())
                 {
                     Console.WriteLine("La tienda está vacía.");
                     continue;
                 }
 
-                store.ShowItems();
+                int i = 1;
+                var lista = new List<Item>();
 
-                Console.WriteLine("Seleccione item:");
-                for (int i = 0; i < items.Count; i++)
-                    Console.WriteLine($"{i + 1}. {items[i].Name}");
+                foreach (var pair in items)
+                {
+                    if (pair.Value > 0)
+                    {
+                        Console.WriteLine($"{i}. {pair.Key.Name} - {pair.Key.Price} (Stock: {pair.Value})");
+                        lista.Add(pair.Key);
+                        i++;
+                    }
+                }
 
-                int itemChoice = int.Parse(Console.ReadLine()) - 1;
+                Console.Write("¿Cuántos productos distintos quieres comprar?: ");
+                int n = int.Parse(Console.ReadLine());
 
-                Console.Write("Cantidad: ");
-                int qty = int.Parse(Console.ReadLine());
+                var carrito = new Dictionary<Item, int>();
 
-                store.BuyItem(player, items[itemChoice], qty);
-            }
-            else if (choice == 2)
-            {
-                player.Inventory.ShowInventory();
-            }
-            else
-            {
-                break;
+                for (int j = 0; j < n; j++)
+                {
+                    Console.Write("Seleccione item #: ");
+                    int idx = int.Parse(Console.ReadLine()) - 1;
+
+                    Console.Write("Cantidad: ");
+                    int qty = int.Parse(Console.ReadLine());
+
+                    carrito[lista[idx]] = qty;
+                }
+
+                bool ok = store.BuyItems(player, carrito);
+
+                Console.WriteLine(ok ? "Compra exitosa" : "Compra fallida");
             }
         }
     }
-    }
+
 }
+ }
