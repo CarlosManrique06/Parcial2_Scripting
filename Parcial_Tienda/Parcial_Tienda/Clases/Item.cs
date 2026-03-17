@@ -5,11 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Parcial_Tienda.Clases
-{
-    internal class Item
-    {
-
-using System;
 
 public class Item
 {
@@ -28,8 +23,5 @@ public class Item
         Name = name;
         Price = price;
         Category = category;
-    }
-}
-        
     }
 }
