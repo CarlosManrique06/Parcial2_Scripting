@@ -8,5 +8,17 @@ namespace Parcial_Tienda.Clases
 {
     internal class ItemCategory
     {
+
+public enum ItemCategory
+{
+    Weapon,
+    Armor,
+    Accessory,
+    Supply
+}
+
+
+
+        
     }
 }
