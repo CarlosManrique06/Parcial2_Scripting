@@ -8,5 +8,6 @@ namespace Parcial_Tienda.Clases
 {
     internal class PlayerInventory
     {
+        
     }
 }
