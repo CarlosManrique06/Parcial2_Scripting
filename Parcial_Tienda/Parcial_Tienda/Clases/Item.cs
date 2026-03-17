@@ -8,11 +8,12 @@ namespace Parcial_Tienda.Clases
 
 public class Item
 {
+
     public string Name { get; }
     public decimal Price { get; }
-    public Itemcategory Category { get; }
+    public ItemCategoria Category { get; }
 
-    public Item(string name, decimal price, ItemCategory category)
+    public Item(string name, decimal price, ItemCategoria category)
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Nombre inválido");
@@ -24,4 +25,5 @@ public class Item
         Price = price;
         Category = category;
     }
+
 }
