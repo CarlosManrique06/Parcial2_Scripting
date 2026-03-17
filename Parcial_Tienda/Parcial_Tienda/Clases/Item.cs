@@ -1,31 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 
-namespace Parcial_Tienda.Clases
+public class Item
 {
+    public string Name { get; }
+    public decimal Price { get; }
+    public ItemCategoria Category { get; }
 
-    public class Item
+    public Item(string name, decimal price, ItemCategoria category)
     {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Nombre inválido");
 
-        public string Name { get; }
-        public decimal Price { get; }
-        public ItemCategoria Category { get; }
+        if (price <= 0)
+            throw new ArgumentException("El precio debe ser positivo");
 
-        public Item(string name, decimal price, ItemCategoria category)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Nombre inválido");
-
-            if (price <= 0)
-                throw new ArgumentException("El precio debe ser positivo");
-
-            Name = name;
-            Price = price;
-            Category = category;
-        }
-
+        Name = name;
+        Price = price;
+        Category = category;
     }
 }
