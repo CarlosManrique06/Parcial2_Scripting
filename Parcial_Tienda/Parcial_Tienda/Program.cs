@@ -1,4 +1,6 @@
-﻿namespace Parcial_Tienda
+﻿using Parcial_Tienda.Clases;
+
+namespace Parcial_Tienda
 {
 
 
