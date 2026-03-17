@@ -6,21 +6,27 @@ using System.Threading.Tasks;
 
 namespace Parcial_Tienda.Clases
 {
-    internal class InventorySlot
+   
+    public Item Item { get; private set; }
+    public int Quantity { get; private set; }
+
+    public InventorySlot(Item item, int quantity)
     {
-        public Item Item { get; private set; }
-        public int Quantity { get; set; }
+        if (item == null)
+            throw new ArgumentNullException(nameof(item));
 
-        public InventorySlot(Item item, int quantity)
-        {
-            if (item == null)
-                throw new ArgumentNullException("item");
+        if (quantity < 0)
+            throw new ArgumentException("Cantidad inválida");
 
-            if (quantity < 0)
-                throw new ArgumentException("La cantidad no puede ser negativa.");
+        Item = item;
+        Quantity = quantity;
+    }
 
-            Item = item;
-            Quantity = quantity;
-        }
+    public void Add(int amount)
+    {
+        if (amount <= 0)
+            throw new ArgumentException("Cantidad inválida");
+
+        Quantity += amount;
     }
 }
